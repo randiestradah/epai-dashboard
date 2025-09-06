@@ -1,0 +1,28 @@
+version: 1.0
+runtime: docker
+build:
+  commands:
+    build:
+      - echo "Building EPAI Dashboard..."
+      - docker build -t epai-dashboard .
+run:
+  runtime-version: latest
+  command: node server.js
+  network:
+    port: 3001
+    env: PORT
+  env:
+    - name: NODE_ENV
+      value: production
+    - name: AWS_REGION
+      value: ap-southeast-3
+    - name: AWS_ACCESS_KEY_ID
+      value: AKIA...
+    - name: AWS_SECRET_ACCESS_KEY
+      value: your-secret-key
+    - name: FIREBASE_PROJECT_ID
+      value: epai-assistant
+    - name: ADMIN_API_SECRET
+      value: your-admin-secret
+    - name: FIREBASE_FUNCTIONS_URL
+      value: https://us-central1-epai-assistant.cloudfunctions.net

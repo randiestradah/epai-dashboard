@@ -1,0 +1,40 @@
+service: epai-dashboard
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-southeast-3
+  profile: epai-database
+  environment:
+    AWS_REGION: ap-southeast-3
+    FIREBASE_PROJECT_ID: epai-assistant
+    ADMIN_API_SECRET: ${env:ADMIN_API_SECRET}
+    FIREBASE_FUNCTIONS_URL: ${env:FIREBASE_FUNCTIONS_URL}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "arn:aws:dynamodb:ap-southeast-3:*:table/epai-*"
+        - "arn:aws:dynamodb:ap-southeast-3:*:table/dashboard_*"
+
+functions:
+  dashboard:
+    handler: lambda.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+      - http:
+          path: /
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline

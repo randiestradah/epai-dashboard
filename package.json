@@ -1,0 +1,41 @@
+{
+  "name": "epai-admin-dashboard",
+  "version": "1.0.0",
+  "description": "EPAI Admin Dashboard - Real-time monitoring and analytics",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "lucide-react": "^0.460.0",
+    "recharts": "^2.8.0",
+    "date-fns": "^2.30.0",
+    "firebase-admin": "^11.11.0",
+    "axios": "^1.6.0",
+    "swr": "^2.2.0",
+    "@headlessui/react": "^1.7.0",
+    "clsx": "^2.0.0",
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "aws-sdk": "^2.1692.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.5.0",
+    "@tailwindcss/forms": "^0.5.0"
+  }
+}
