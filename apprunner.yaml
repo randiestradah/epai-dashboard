@@ -3,7 +3,7 @@ runtime: nodejs18
 build:
   commands:
     build:
-      - npm ci --legacy-peer-deps
+      - npm install --legacy-peer-deps
       - npm run build
 run:
   runtime-version: 18.20.4
