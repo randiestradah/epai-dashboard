@@ -1,13 +1,13 @@
 version: 1.0
-runtime: docker
+runtime: nodejs18
 build:
   commands:
     build:
-      - echo "Building EPAI Dashboard..."
-      - docker build -t epai-dashboard .
+      - npm ci --legacy-peer-deps
+      - npm run build
 run:
-  runtime-version: latest
-  command: node server.js
+  runtime-version: 18.20.4
+  command: npm start
   network:
     port: 3001
     env: PORT
@@ -16,13 +16,3 @@ run:
       value: production
     - name: AWS_REGION
       value: ap-southeast-3
-    - name: AWS_ACCESS_KEY_ID
-      value: AKIA...
-    - name: AWS_SECRET_ACCESS_KEY
-      value: your-secret-key
-    - name: FIREBASE_PROJECT_ID
-      value: epai-assistant
-    - name: ADMIN_API_SECRET
-      value: your-admin-secret
-    - name: FIREBASE_FUNCTIONS_URL
-      value: https://us-central1-epai-assistant.cloudfunctions.net
