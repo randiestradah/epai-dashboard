@@ -178,11 +178,11 @@ export default function ActivityPage() {
                   )}
                   {activity.metadata && (
                     <div className="text-xs text-gray-500 mt-1">
-                      {activity.type === 'ai_request' && (
-                        <span>Response: {activity.metadata.responseTime}ms • Provider: {activity.metadata.provider}</span>
+                      {activity.type === 'ai_request' && activity.metadata && (
+                        <span>Response: {(activity.metadata as any).responseTime}ms • Provider: {(activity.metadata as any).provider}</span>
                       )}
-                      {activity.type === 'error' && (
-                        <span>Error: {activity.metadata.error} • Fallback: {activity.metadata.fallback}</span>
+                      {activity.type === 'error' && activity.metadata && (
+                        <span>Error: {(activity.metadata as any).error} • Fallback: {(activity.metadata as any).fallback}</span>
                       )}
                     </div>
                   )}
