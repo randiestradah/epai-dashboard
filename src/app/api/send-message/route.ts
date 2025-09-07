@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import * as AWS from 'aws-sdk';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
 
-// Configure AWS
-AWS.config.update({
+const client = new DynamoDBClient({
   region: process.env.AWS_REGION || 'ap-southeast-3',
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
+  }
 });
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
+const dynamodb = DynamoDBDocumentClient.from(client);
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,7 +46,7 @@ export async function POST(request: NextRequest) {
     const conversationId = `${assistantId}_${Date.now()}`;
     const timestamp = Date.now();
     
-    await dynamodb.put({
+    await dynamodb.send(new PutCommand({
       TableName: 'epai-conversations',
       Item: {
         conversationId,
@@ -56,7 +58,7 @@ export async function POST(request: NextRequest) {
         processingTime: aiResponse.processingTime,
         createdAt: new Date().toISOString()
       }
-    }).promise();
+    }));
 
     return NextResponse.json({
       success: true,
