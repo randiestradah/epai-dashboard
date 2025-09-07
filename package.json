@@ -4,7 +4,7 @@
   "description": "EPAI Admin Dashboard - Real-time monitoring and analytics",
   "private": true,
   "engines": {
-    "node": "22.x"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "next dev -p 3001",

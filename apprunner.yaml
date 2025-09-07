@@ -6,7 +6,7 @@ build:
       - npm install --legacy-peer-deps
       - npm run build
 run:
-  runtime-version: 22.12.0
+  runtime-version: 22.17.0
   command: npm start
   network:
     port: 3001
