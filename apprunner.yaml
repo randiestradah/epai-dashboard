@@ -16,3 +16,13 @@ run:
       value: production
     - name: AWS_REGION
       value: ap-southeast-3
+    - name: POSTGRES_HOST
+      value: epai-db.cj0wcmsam8bg.ap-southeast-3.rds.amazonaws.com
+    - name: POSTGRES_PORT
+      value: 5432
+    - name: POSTGRES_DB
+      value: postgres
+    - name: POSTGRES_USER
+      value: postgres
+    - name: POSTGRES_PASSWORD
+      value: susude00!!
