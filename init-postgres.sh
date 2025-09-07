@@ -8,7 +8,7 @@ echo "🗄️ Initializing EPAI PostgreSQL database..."
 DB_HOST="epai-db.cj0wcmsam8bg.ap-southeast-3.rds.amazonaws.com"
 DB_USER="postgres"
 DB_PASSWORD="susude00!!"
-DB_NAME="postgres"
+DB_NAME="epai_system"
 
 # Set password for psql
 export PGPASSWORD="$DB_PASSWORD"

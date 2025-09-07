@@ -16,13 +16,5 @@ run:
       value: production
     - name: AWS_REGION
       value: ap-southeast-3
-    - name: POSTGRES_HOST
-      value: epai-db.cj0wcmsam8bg.ap-southeast-3.rds.amazonaws.com
-    - name: POSTGRES_PORT
-      value: 5432
-    - name: POSTGRES_DB
-      value: postgres
-    - name: POSTGRES_USER
-      value: postgres
-    - name: POSTGRES_PASSWORD
-      value: susude00!!
+    - name: DATABASE_URL
+      value: postgresql://neondb_owner:npg_Fx4JdrkfmbU9@ep-spring-breeze-a167x8af-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
