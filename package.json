@@ -1,7 +1,6 @@
 {
   "name": "epai-admin-dashboard",
   "version": "1.0.0",
-  "description": "EPAI Admin Dashboard - Real-time monitoring and analytics",
   "private": true,
   "engines": {
     "node": ">=22.0.0"
@@ -11,35 +10,30 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "setup-auth": "psql $DATABASE_URL -f src/database/auth-schema.sql"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.716.0",
     "@aws-sdk/lib-dynamodb": "^3.716.0",
-    "@headlessui/react": "^2.2.0",
+    "axios": "^1.7.0",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.468.0",
+    "next": "^15.5.2",
+    "pg": "^8.13.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.13.0"
+  },
+  "devDependencies": {
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.20",
-    "axios": "^1.7.0",
-    "clsx": "^2.1.0",
-    "date-fns": "^4.1.0",
-    "firebase-admin": "^13.0.0",
-    "lucide-react": "^0.468.0",
-    "next": "^15.5.0",
-    "pg": "^8.16.3",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.5.2",
     "postcss": "^8.5.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "recharts": "^2.13.0",
-    "swr": "^2.3.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.7.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.5.9",
-    "@types/pg": "^8.15.5",
-    "eslint": "^9.17.0",
-    "eslint-config-next": "^15.5.0"
   }
 }

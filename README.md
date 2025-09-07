@@ -30,6 +30,8 @@ npm start
 
 ### Management Tools
 - **User Management** - View users, activity, subscriptions
+- **AI Provider Management** - Add/edit/disable AI providers
+- **Rate Limit Monitoring** - Real-time usage tracking
 - **System Controls** - Feature flags, maintenance mode
 - **Security Monitoring** - Failed logins, suspicious activity
 - **Database Stats** - Collection sizes, storage usage
@@ -49,7 +51,10 @@ dashboard/
 │   │   ├── layout.tsx     # Root layout
 │   │   ├── page.tsx       # Dashboard home
 │   │   ├── users/         # User management
-│   │   ├── ai/            # AI metrics
+│   │   ├── ai/            # AI metrics & provider management
+│   │   │   ├── providers/ # AI provider CRUD
+│   │   │   ├── metrics/   # Performance analytics
+│   │   │   └── limits/    # Rate limit monitoring
 │   │   ├── costs/         # Cost analysis
 │   │   └── system/        # System health
 │   ├── components/        # React components
@@ -77,6 +82,16 @@ FIREBASE_ADMIN_KEY=your-admin-key
 ADMIN_API_SECRET=your-secret-key
 FIREBASE_FUNCTIONS_URL=https://us-central1-epai-assistant.cloudfunctions.net
 
+# AI Gateway
+AI_GATEWAY_URL=http://localhost:3002
+AI_GATEWAY_ADMIN_KEY=your-ai-gateway-admin-key
+
+# Database
+DATABASE_URL=postgresql://neondb_owner:npg_Fx4JdrkfmbU9@ep-spring-breeze-a167x8af-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+# JWT Authentication
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+
 # Next.js
 NEXTAUTH_SECRET=your-nextauth-secret
 NEXTAUTH_URL=http://localhost:3001
@@ -89,6 +104,14 @@ The dashboard connects to Firebase Functions admin API:
 - `/adminAPI/ai/*` - AI metrics and performance
 - `/adminAPI/costs/*` - Cost analysis and breakdown
 - `/adminAPI/system/*` - System health and logs
+
+### AI Gateway Admin API
+Direct connection to AI Gateway for provider management:
+- `GET /admin/providers` - List all AI providers
+- `POST /admin/providers` - Add new AI provider
+- `PUT /admin/providers/:id` - Update provider configuration
+- `DELETE /admin/providers/:id` - Disable provider
+- `GET /health` - Real-time provider status
 
 ## 📈 Metrics Tracked
 
@@ -160,19 +183,29 @@ vercel deploy
 - Subscription management
 - User analytics charts
 
-### 3. AI Metrics
+### 3. AI Provider Management
+- **Provider List** - View all configured AI providers
+- **Add Provider** - Configure new AI services (Groq, Gemini, etc.)
+- **Edit Provider** - Update endpoints, rate limits, priorities
+- **Rate Limits** - Real-time usage tracking per provider
+- **Performance** - Response times, success rates, error logs
+- **Cost Tracking** - Usage costs per provider
+- **Health Status** - Live availability monitoring
+
+### 4. AI Metrics & Analytics
 - Response time charts
-- Provider performance
+- Provider performance comparison
 - Error rate monitoring
 - Model usage statistics
+- Fallback success rates
 
-### 4. Cost Analysis
+### 5. Cost Analysis
 - Monthly cost breakdown
 - Cost per user trends
 - Savings from self-hosting
 - Budget alerts
 
-### 5. System Health
+### 6. System Health
 - Infrastructure status
 - Performance monitoring
 - Error logs

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
+import axios from 'axios';
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION || 'ap-southeast-3',
@@ -12,35 +13,19 @@ const client = new DynamoDBClient({
 
 const dynamodb = DynamoDBDocumentClient.from(client);
 
+// AI Gateway Configuration
+const AI_GATEWAY_URL = process.env.AI_GATEWAY_URL || 'http://localhost:3002';
+
 export async function POST(request: NextRequest) {
   try {
-    const { message, assistantId } = await request.json();
+    const { message, assistantId, personality } = await request.json();
 
     if (!assistantId || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Check if message contains calendar info
-    const hasCalendarInfo = message.includes('Calendar info:');
-    
-    let aiResponse;
-    if (hasCalendarInfo) {
-      const parts = message.split('Calendar info:');
-      const userMsg = parts[0].trim();
-      const calendarInfo = parts[1].trim();
-      
-      aiResponse = {
-        response: `Based on your calendar: ${calendarInfo}\n\nRegarding "${userMsg}" - I can help you manage your schedule! Would you like me to add an event, check for conflicts, or provide more details about your upcoming meetings?`,
-        provider: "dashboard-api",
-        processingTime: 0.8
-      };
-    } else {
-      aiResponse = {
-        response: `Hello! I received your message: "${message}". I'm your AI assistant running on Dashboard API! I can help with your calendar, schedule meetings, and much more! Try asking "What's my schedule today?" or "What meetings do I have upcoming?"`,
-        provider: "dashboard-api",
-        processingTime: 0.8
-      };
-    }
+    // Call AI Gateway service
+    const aiResponse = await callAIGateway(message, personality, assistantId);
 
     // Save conversation to DynamoDB
     const conversationId = `${assistantId}_${Date.now()}`;
@@ -74,5 +59,39 @@ export async function POST(request: NextRequest) {
       success: false, 
       error: 'Internal server error' 
     }, { status: 500 });
+  }
+}
+
+// Call AI Gateway Service
+async function callAIGateway(message: string, personality: any, assistantId: string) {
+  try {
+    const response = await axios.post(`${AI_GATEWAY_URL}/api/chat`, {
+      message,
+      personality,
+      assistantId
+    }, {
+      timeout: 30000,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    if (response.data.success) {
+      return {
+        response: response.data.response,
+        provider: response.data.provider,
+        processingTime: response.data.responseTime
+      };
+    } else {
+      throw new Error(response.data.error || 'AI Gateway error');
+    }
+    
+  } catch (error) {
+    console.error('AI Gateway call failed:', error.message);
+    
+    // Fallback response
+    return {
+      response: "I'm having trouble connecting to my AI services right now. Please try again in a moment!",
+      provider: "fallback",
+      processingTime: 1000
+    };
   }
 }

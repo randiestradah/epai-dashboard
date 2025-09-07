@@ -41,7 +41,7 @@ export const postgres = {
   // Feature Flags
   async getFeatureFlags(tier?: string) {
     let query = 'SELECT * FROM feature_flags WHERE is_enabled = true';
-    const params: any[] = [];
+    const params: unknown[] = [];
     
     if (tier) {
       query += ' AND (target_tiers IS NULL OR target_tiers @> $1)';
@@ -67,7 +67,7 @@ export const postgres = {
   },
 
   // Analytics
-  async saveMetric(date: string, metricName: string, value: number, dimensions?: Record<string, any>) {
+  async saveMetric(date: string, metricName: string, value: number, dimensions?: Record<string, unknown>) {
     await pool.query(`
       INSERT INTO daily_metrics (date, metric_name, metric_value, dimensions)
       VALUES ($1, $2, $3, $4)
@@ -96,7 +96,7 @@ export const postgres = {
   },
 
   // Raw query for complex operations
-  async query(text: string, params?: any[]) {
+  async query(text: string, params?: unknown[]) {
     const result = await pool.query(text, params);
     return result.rows;
   },
