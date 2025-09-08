@@ -10,7 +10,8 @@ import {
   Settings, 
   Activity,
   Database,
-  Shield
+  Shield,
+  Cpu
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -18,6 +19,7 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Users', href: '/users', icon: Users },
   { name: 'Activity', href: '/activity', icon: Activity },
+  { name: 'AI Providers', href: '/ai-providers', icon: Cpu },
   { name: 'AI Metrics', href: '/ai', icon: Bot },
   { name: 'Costs', href: '/costs', icon: DollarSign },
   { name: 'System Health', href: '/system', icon: Database },

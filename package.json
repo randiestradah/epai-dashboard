@@ -15,6 +15,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.716.0",
     "@aws-sdk/lib-dynamodb": "^3.716.0",
+    "@tailwindcss/forms": "^0.5.10",
     "axios": "^1.7.0",
     "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
